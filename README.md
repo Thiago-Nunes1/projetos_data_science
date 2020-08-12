@@ -6,11 +6,11 @@
 # Thiago Nunes
 <sub>*Lead Data Scientist* at Space Operations Center</sub>
 
-Tenho experiência com
+Sou professor, pesquisador e programador na área de Física Experimental, participo de projetos de pesquisa voltados para o ensino de programação nas escolas públicas
 
-My credentials include a Master's in Space Science and Technology from the Aeronautics Institute of Technology (ITA), an institution of higher education and advanced research rated as one of the top and most prestigious engineering schools in Brazil, and a MBA in Project and Process Management from the University of Air Force (UNIFA).
+Formado em Licenciatura em Física pelo Instituto Federal do Amazonas, sou cientista de dados e faço pesquisa na área de inteligência artificial 
 
-**Background in:** Python, Machine Learning, Space Operations and Mathematical Optimisation.
+**Background in:** Python, Machine Learning.
 
 **Links:**
 * [Blog]
