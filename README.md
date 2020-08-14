@@ -34,7 +34,7 @@ Veja os meus tutoriais publicados:
 * **Como lidar com dados desbalanceados:** https://bit.ly/2ZlaNsV
 
 ### Resolvendo problemas da Física com Python
-* **Problema da radiação do corpo negro:** https://bit.ly/3gZcrsg
+* **Problema da radiação do corpo negro:** https://bit.ly/3gXzALL
 
 
 ---
