@@ -35,6 +35,7 @@ Veja os meus tutoriais publicados:
 
 ### Resolvendo problemas da Física com Python
 * **Problema da radiação do corpo negro:** https://bit.ly/3gXzALL
+* **Movimento Browniano:** https://bit.ly/32a317d
 
 
 ---
