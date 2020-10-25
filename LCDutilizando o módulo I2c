@@ -1,0 +1,26 @@
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x3F,16,2);  // enderaço do LCD 0x27 Para 16 colunas e 2 linhas no display
+
+void setup()
+{
+  lcd.init();                      // inicializando o lcd 
+  //lcd.init();
+  // Print a message to the LCD.
+ 
+}
+
+
+void loop()
+{
+  lcd.backlight();
+  delay(2000);
+  lcd.noBacklight();
+  delay(1000);
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print(" Prof Thiago ");
+  lcd.setCursor(0,1);
+  lcd.print("  com Arduino ");
+}
