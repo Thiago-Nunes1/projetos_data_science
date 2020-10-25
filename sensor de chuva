@@ -1,0 +1,28 @@
+int PinoDetector = A0;
+int LedVerde = 10;
+int LedAmarelo = 11;
+int limiar = 700;
+
+void setup(){
+  pinMode(PinoDetector, INPUT);
+  pinMode (LedVerde,OUTPUT);
+  pinMode (LedAmarelo,OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the input on analog pin 0:
+  int ValorMedido = analogRead(PinoDetector);
+  Serial.print(ValorMedido);
+  if(ValorMedido < limiar){
+    Serial.println(" - CHUVA! ");
+    digitalWrite(LedAmarelo, HIGH);
+    digitalWrite(LedVerde,LOW);
+   }
+  else {
+    Serial.println(" - sem chuva! ");
+    digitalWrite(LedAmarelo, LOW);
+    digitalWrite(LedVerde,HIGH);
+  }
+  delay(500);
+}
