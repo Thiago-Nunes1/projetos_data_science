@@ -8,11 +8,11 @@
 # Thiago Nunes
 <sub>*Lead Data Scientist* at Space Operations Center</sub>
 
-Sou professor, pesquisador e programador na área de Física Experimental, participo de projetos de pesquisa voltados para o ensino de programação nas escolas públicas
+Sou professor, pesquisador e programador na área da Física Experimental, participo de projetos de pesquisa voltados para o ensino de programação nas escolas públicas.
 
-Formado em Licenciatura em Física pelo Instituto Federal do Amazonas, sou cientista de dados e faço pesquisa na área de inteligência artificial 
+Formado em Licenciatura em Física pelo Instituto Federal do Amazonas, sou cientista de dados se apaixonado pelas tecnologias educacionais.
 
-**Background in:** Python, Machine Learning.
+**Background in:** Python, Machine Learning, Ensino tecnológico.
 
 **Links:**
 * [Blog]
@@ -20,22 +20,22 @@ Formado em Licenciatura em Física pelo Instituto Federal do Amazonas, sou cient
 
 
 
-## Projetos:
+## Projetos com python:
 Veja os meus tutoriais publicados:
 ### Ensino de estatística
-* **Como usar o Histograma para Data Science:** https://bit.ly/3iEonA8
-* **Como Implementar Regressão Linear com Python:** https://bit.ly/2Li5pzY
+Veja os meus tutoriais publicados:
 
 ### Data Science
-* **Data Science: Investigando o naufrágio do Titanic:** https://bit.ly/2Ubr5SH
-* **Como Tratar Dados Ausentes com Pandas:** https://bit.ly/31KWSMN
-* **XGBoost: aprenda este algoritmo de Machine Learning em Python:** https://bit.ly/2UbRhws
-* **Como criar uma Wordcloud em Python:** https://bit.ly/2OxsphM
-* **Como lidar com dados desbalanceados:** https://bit.ly/2ZlaNsV
+Veja os meus tutoriais publicados:
 
-### Resolvendo problemas da Física com Python
-* **Problema da radiação do corpo negro:** https://bit.ly/3gXzALL
-* **Movimento Browniano:** https://bit.ly/32a317d
+### Resolvendo problemas de Física com Python:
+Veja os meus tutoriais publicados:
+
+### Projetos de com Arduino:
+Veja os meus tutoriais publicados:
+
+### Integrando Python com Arduino
+Veja os meus tutoriais publicados:
 
 
 ---
