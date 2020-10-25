@@ -1,0 +1,11 @@
+int pinoLDR = (A0);
+int valorLDR = 0;
+void setup() {
+Serial.begin (9600);
+}
+void loop() {
+valorLDR = analogRead(pinoLDR);
+int sensorValue =  analogRead(A0);
+Serial.println(sensorValue);
+delay(500);
+}
