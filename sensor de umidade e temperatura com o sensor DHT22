@@ -1,0 +1,23 @@
+#include "DHT.h" //Adiciona a biblioteca do sensor DHT11 e DHT22
+#define DHT_DATA_PIN 2 // Define do pino a ser utilizado no Arduino para o sensor 2
+#define DHTTYPE DHT22 // Define o modelo do sensor a ser utilizado: DHT11 ou DHT22
+ DHT dht(DHT_DATA_PIN, DHTTYPE);
+ void setup() {
+  Serial.begin(9600);  // Configuração da Serial
+  dht.begin();  // Inicializa o sensor
+}
+ void loop() {
+  delay(2000);   // Espera 2 segundos para fazer um nova leitura
+  float umidade = dht.readHumidity();    // Realiza a leitura da umidade
+  float temperatura = dht.readTemperature();    // Realiza a leitura da temperatura
+  if (isnan(umidade) || isnan(temperatura)) // Se não for um numero retorna erro de leitura
+ {        Serial.println("Erro ao ler o sensor!");
+    return;
+  }
+  else {
+    Serial.print("Umidade....: " + String(umidade));
+    Serial.println("%");
+    Serial.print("Temperatura: " + String(temperatura));
+    Serial.println("*C");  
+  }
+}
