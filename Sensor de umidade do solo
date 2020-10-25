@@ -1,0 +1,21 @@
+
+int PinoDetector = A0;//
+int limiar = 600;
+
+void setup(){
+  pinMode(PinoDetector, INPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // read the input on analog pin 0:
+  int ValorMedido = analogRead(PinoDetector);
+  Serial.print(ValorMedido);
+  if(ValorMedido < limiar){
+    Serial.println(" - Não Necessita Regar ");
+   }
+  else {
+    Serial.println(" - Está na Hora de Regar ");
+  }
+  delay(500);
+}
