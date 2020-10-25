@@ -1,0 +1,412 @@
+//
+  // --- Bibliotecas auxiliares ---
+  #include <Wire.h>// para o módulo i2c
+  #include <LiquidCrystal_I2C.h> //download:https://www.arduinolibraries.info/libraries/liquid-crystal-i2-c  
+  #include <DHT.h>// para o sensor dht22
+  #include<DallasTemperature.h>// para o sensor ds18b20
+  #include<OneWire.h>// para o sensor ds18b20
+  
+  //--- Mapeamento de Hardware ---
+  
+  #define DHT_DATA_PIN 14
+  #define DHTTYPE DHT22 // define o sensor da família DHT a ser utilizado
+  #define EMPTemp 6// para o sensor ds18b20
+  
+  //--- Constantes e Objetos ---
+  
+  LiquidCrystal_I2C lcd(0x3F,16,2); // o endereço do lcd utilizado é 0x3F 
+  
+    
+  int up = 10;              //botão sobe pino D10
+  int down = 9;            //botão desce pino D9
+  int enter = 8;           //botão seleção pino D8
+  
+  int menu = 1;
+    
+  int pinLDR = 15;        // pino de leitura do LDR pino A1
+  int valorLDR = 0;       // variável com valor lido do LDR
+
+  int pinSCHUVA = 20;      // pino de leitura do FD10 pino A6
+  int valorSCHUVA = 0;     // variável com valor lido do SCHUVA
+
+  int PinoDetector = 17; // sensor yl69
+  int limiar = 600;// sensor yl69
+
+  int PinoDetectorChuva = A2; // sensor yl83;
+  int limiarS = 700;// sensor yl83
+  
+  DHT dht(DHT_DATA_PIN, DHTTYPE);
+
+  //Array que desenha o simbolo de grau
+  byte a[8]= {B00110,B01001,B00110,B00000,B00000,B00000,B00000,B00000,};
+  
+  OneWire ourWire(EMPTemp);// para o sensor ds18b20
+  DallasTemperature sensors(&ourWire);// para o sensor ds18b20
+
+
+// --- Constantes ---
+const float pi = 3.14159265;     //Número de pi
+int period = 5000;               //Tempo de medida(miliseconds)
+int radius = 100;                //Raio do anemometro(mm)
+
+// --- Variáveis Globais ---
+unsigned int Sample  = 0;        //Armazena o número de amostras
+unsigned int counter = 0;        //Contador para o sensor
+unsigned int RPM = 0;            //Rotações por minuto
+float vento = 0;             //Velocidade do vento (m/s)
+float windspeed = 0;             //Velocidade do vento (km/h)
+   
+  void setup() 
+  {
+    // botões
+    pinMode(up, INPUT_PULLUP);
+    pinMode(down, INPUT_PULLUP);
+    pinMode(enter, INPUT_PULLUP);
+    updateMenu();
+
+    // LCD e apresentação inicial
+    lcd.init();
+    lcd.backlight();
+    lcd.setCursor(0,0);
+    lcd.print("     OFICINA ");
+    lcd.setCursor(0,1);
+    lcd.print(" FISICAnaPRATICA ");
+
+   // DHT22
+    dht.begin();
+
+    // Higrômetro
+    pinMode (PinoDetector, INPUT); 
+
+    // Detector Chuva
+    pinMode (PinoDetectorChuva, INPUT);
+
+    // Medidor de tempetatura
+    sensors.begin();
+
+    // Anemômetro
+    pinMode(2,INPUT);
+   
+  }
+  
+  //--- Loop Infinito ---
+  
+  void loop() {
+
+    if(!digitalRead(down)){
+      menu++;
+      updateMenu();
+      delay(300);
+      while(!digitalRead(down));
+      }
+     if (!digitalRead(up)){
+      menu--;
+      updateMenu();
+      delay(300);
+      while(!digitalRead(up));
+      }
+      if (!digitalRead(enter)){
+      executeAction();
+      updateMenu();
+      delay(300);
+      while (!digitalRead(enter));
+      }
+
+  } // end loop
+
+  
+  // --- Desenvolvimento das Funções ---
+
+  void updateMenu(){
+  
+  switch (menu){
+
+    case 0:
+    
+    menu = 1;
+    break;
+  
+    case 1:
+    
+    lcd.clear();
+    lcd.print(">AR           ");
+    lcd.setCursor(0,1);
+    lcd.print(" LUMINOSIDADE");
+    break;
+    
+    case 2:
+
+    lcd.clear();
+    lcd.print(" AR           ");
+    lcd.setCursor(0,1);
+    lcd.print(">LUMINOSIDADE");
+    break;
+
+    case 3:
+
+    lcd.clear();
+    lcd.print(">AGUA");
+    lcd.setCursor(0,1);
+    lcd.print(" SOLO");
+    break;
+    
+    case 4:
+
+    lcd.clear();
+    lcd.print(" AGUA");
+    lcd.setCursor(0,1);
+    lcd.print(">SOLO");
+    break;
+
+    case 5:
+
+    lcd.clear();
+    lcd.print(">CHUVA");
+    lcd.setCursor(0,1);
+    lcd.print(" VENTO");
+    break;
+
+    case 6:
+
+    lcd.clear();
+    lcd.print(" CHUVA");
+    lcd.setCursor(0,1);
+    lcd.print(">VENTO");
+    break;
+
+    case 7:
+
+    lcd.clear();
+    lcd.print(">AUTORES");
+    lcd.setCursor(0,1);
+    lcd.print(" VERSAO da EMP");
+    break;
+
+    case 8:
+
+    lcd.clear();
+    lcd.print(" AUTORES");
+    lcd.setCursor(0,1);
+    lcd.print(">VERSAO da EMP");
+    break;
+
+    case 9:
+
+    menu = 8;
+    break;
+    
+    }
+  }
+
+  void executeAction(){
+
+    switch(menu){
+      
+      case 1:
+      
+      action1();
+      break;
+      
+      case 2:
+      
+      action2();
+      break;
+      
+      case 3:
+      
+      action3();
+      break;
+      
+      case 4:
+      
+      action4();
+      break;
+
+      case 5:
+      
+      action5();
+      break;
+
+      case 6:
+      
+      action6();
+      break;
+
+      case 7:
+      
+      action7();
+      break;
+
+      case 8:
+      
+      action8();
+      break;
+
+      }
+    }
+
+  void action1()
+  {
+   lcd.clear();
+  
+    // Realiza a leitura da temperatura
+  float temperatura = dht.readTemperature();
+  
+  // Realiza a leitura da umidade
+  float umidade = dht.readHumidity();
+  
+  
+    lcd.setCursor(1,0);
+    lcd.print("Temp: " + String(temperatura));
+    lcd.createChar(1,a); //Atribui o numero "1" ao valor do array a, que desenha o simbolo de grau
+    lcd.setCursor(12,0);
+    lcd.write(1);
+    lcd.setCursor(13,0);
+    lcd.print(" C ");
+    lcd.setCursor(0,1);
+    lcd.print(" Umid: " + String(umidade));
+    lcd.setCursor(13,1);
+    lcd.print(" % ");
+    delay(3000);
+  }
+    
+  void action2(){
+    
+   lcd.clear();
+   valorLDR = analogRead(pinLDR); // lendo o valor do LDR
+   int valorLDR = analogRead(15); // lendo o valor de entrada do LDR A1
+   
+   lcd.setCursor(1,0);
+   lcd.print(" Intensidade ");
+   lcd.setCursor (6,1);
+   lcd.print (valorLDR);// mostra no LCD o valor lido do LDR
+   //lcd.setCursor(8,1);
+   //lcd.print("    ");
+   delay(3000);
+    }
+
+  void action3(){
+    
+    lcd.clear();
+    sensors.requestTemperatures();
+    lcd.print("  Temperatura");
+    lcd.setCursor (4,1);
+    lcd.print (sensors.getTempCByIndex(0));// mostra no LCD o valor lido do ds18b20
+    lcd.createChar(1,a); //Atribui o numero "1" ao valor do array a, que desenha o simbolo de grau
+    lcd.setCursor(9,1);
+    lcd.write(1);
+    lcd.setCursor(10,1);
+    lcd.print("C");
+    delay(1500);
+    }
+
+  void action4(){
+    
+    lcd.clear();
+    int ValorMedido = analogRead(PinoDetector); // lendo o valor de entrada do LDR A1
+    
+    lcd.print(ValorMedido);
+    if(ValorMedido < limiarS){
+    lcd.setCursor(0,0);
+    lcd.print("   Solo Umido!   ");
+    }
+    else {
+    
+    lcd.setCursor(0,0);
+    lcd.print ("   Solo Seco!   ");
+   }
+    lcd.setCursor (6,1);
+    lcd.print (ValorMedido);// mostra no LCD o valor lido do yl69
+    delay(1500);
+    }
+    
+   void action5(){
+
+    lcd.clear();
+    valorSCHUVA = analogRead(pinSCHUVA); // lendo o valor do FD10
+    int valorSCHUVA = analogRead(20); // lendo o valor de entrada do SCHUVA A6
+    int ValorMedido = analogRead (PinoDetectorChuva);
+   lcd.print(ValorMedido);
+   if(ValorMedido < limiar){
+   lcd.setCursor(0,0);
+   lcd.print("    Chovendo!");
+   }
+   else {
+    
+    lcd.setCursor(0,0);
+    lcd.print ("   Sem Chuva!");
+   }
+   lcd.setCursor (7,1);
+   lcd.print (valorSCHUVA);// mostra no LCD o valor lido do SCHUVA
+   delay(3000);
+    }
+ 
+  void action6(){
+    
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" lendo   ");
+    delay(700);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" aguarde... ");
+    delay(500);
+    velocidadevento();
+    RPMcalc();
+    lcd.setCursor(0,1);
+    lcd.print(RPM);
+    lcd.setCursor(3,1);
+    lcd.print("RPM");
+    VelocidadeVento();
+    lcd.setCursor(8,1);
+    lcd.print(vento);
+    lcd.print("m/s");
+    lcd.setCursor(11,1);
+    lcd.setCursor(0,0);
+    lcd.print("   RESULTADO  ");
+    delay(1500);
+    }
+ void action7(){
+    
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print ("Dra Maud Souza");
+    lcd.setCursor(0,1);
+    lcd.print ("MsC Daniel Gomes");
+    delay(2000);
+    }
+ void action8(){
+    
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print ("   Versao 1.7 ");
+    lcd.setCursor(0,1);
+    lcd.print ("Data 08/06/2020");
+    delay(2000);
+    }
+
+    //Função para medir velocidade do vento
+ void velocidadevento() {
+  vento = 0;
+
+  counter = 0;
+  attachInterrupt(0, addcount, RISING);
+  unsigned long millis();
+  long startTime = millis();
+  while (millis() < startTime + period) {}
+}
+
+//Função para calcular o RPM
+ void RPMcalc() {
+  RPM = ((counter) * 60) / (period / 1000); // Calculate revolutions per minute (RPM)
+}
+
+//Velocidade do vento em m/s
+ void VelocidadeVento() {
+  vento = (((4 * pi * radius * RPM) / 60) / 1000); //Calcula velocidade do vento em m/s
+} //VelocidadeVento
+
+//Incrementa contador
+ void addcount() {
+  counter++;
+}
